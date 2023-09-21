@@ -26,8 +26,6 @@
 //   return workbook.toFileAsync("result.xlsx");
 // });
 
-//above code tried by watching youtube videos, quite time consuming hence used chatGPT
-
 const fs = require("fs");
 const XLSX = require("xlsx");
 const { parse, format, addDays } = require("date-fns");
@@ -66,12 +64,12 @@ for (let row = 2; row <= lastRow; row++) {
 
         if (typeof cell.v === "number") {
           // Numeric date value (Excel date serial number)
-          const excelDateValue = cell.v;
-          const jsDate = new Date(
-            (excelDateValue - (25567 + 1)) * 86400 * 1000
+          const dateValue = cell.v;
+          const badDateData = new Date(
+            (dateValue - (25567 + 1)) * 86400 * 1000
           );
-          const adjustedJsDate = addDays(jsDate, -1); // Adjust by subtracting one day
-          formattedDate = format(adjustedJsDate, "dd/MM/yyyy");
+          const adjustedDate = addDays(badDateData, -1); // Adjust by subtracting one day
+          formattedDate = format(adjustedDate, "dd/MM/yyyy");
         } else if (typeof cell.v === "string") {
           // String date value in MM/DD/YYYY format
           const dateRegex = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
